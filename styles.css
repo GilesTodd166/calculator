@@ -1,0 +1,80 @@
+* {
+    margin: 0;
+    padding: 0; 
+    }
+
+body {
+
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+}
+
+.main {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.calculator {
+    display: flex;
+    width: max-content;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    margin: 10px;
+    border-radius: 15px;
+    background-color: aquamarine;
+}
+
+.display-box {
+    display: flex;
+    flex-direction: column;
+    margin: 10px;
+    width: 350px;
+}
+
+.display {
+    height: 50px;
+    background-color: antiquewhite;
+    font-size: 40px;
+    border-top-style: solid;
+    border-top-right-radius: 10px;
+    border-top-left-radius: 10px;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+}
+
+.row-1, .row-2, .row-3, .row-4 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.number-btn, .clear-btn, .delete-btn, .operator-btn {
+    background-color: #7e7f9a;
+    border: 2px solid #1A1A1A;
+    border-radius: 5px;
+    box-sizing: border-box;
+    color: #FFFFFF;
+    display: inline-block;
+    line-height: normal;
+    margin: 5px;
+    outline: none;
+    font-size: 30px;
+}
+
+.delete-btn, .clear-btn {
+    height: 40px;
+    width: 170px;
+}
+
+.number-btn, .operator-btn {
+    width: 80px;
+    height: 80px;
+}
