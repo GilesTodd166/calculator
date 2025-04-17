@@ -18,26 +18,66 @@ function multiply (a, b) {
 
 // Variables for calculation operations, a, b, operator.
 
-var numOne = 2;
-var numTwo = 5;
-var operator;
+
 
 // Operate function to call two numbers and operator function.
  
-function operate (number) {
-    return number;
+function operate (a, b, mathOp) {
+    let number = '';
+        if (mathOp == '+') {
+            number = a + b;
+        } else if (mathOp == '-') { 
+            number = a - b;
+        } else if (mathOp == '/') {
+            number = a / b;
+        } else {
+            number = a * b;
+        }
+        return number;
 };
-
-operate(add(numOne, numTwo));
 
 // Create function to populate display on digit click. Store display number in var.
 
 let numberButtons = document.querySelectorAll('.number-btn');
 let displayNum = document.querySelector('.display');
-var currentNum = '';
+let firstNum = '';
+let secondNum = '';
+let operatorChoice = '';
+
+let operatorButtons = document.querySelectorAll('.operator-btn');
+
+let equalsButton = document.querySelector('.equals-btn');
 
 numberButtons.forEach((number) => {
     number.addEventListener('click', (e) => {
-        currentNum = displayNum.innerHTML = (e.target.getAttribute('data-num'));
+        if (firstNum != '') {
+            secondNum = displayNum.innerHTML = (e.target.getAttribute('data-num'));
+        } else 
+            firstNum = displayNum.innerHTML = (e.target.getAttribute('data-num'));
     });
 });
+
+operatorButtons.forEach((item) => {
+    item.addEventListener('click', (e) => {
+        operatorChoice = (e.target.getAttribute('data-ref'));
+    });
+});
+
+equalsButton.addEventListener('click', () => {
+    handleOperate();
+});
+
+console.log(firstNum);
+console.log(operatorChoice);
+console.log(secondNum);
+
+// // Create function to store first number choice, 
+// // operation choice and second number choice, 
+// // pass to operate function on equal press.
+
+function handleOperate (numOne, numTwo, operatorChoice) {
+    if (firstNum != '' &&  secondNum != '' && operatorChoice != '') {
+        operate(numOne, numTwo, operatorChoice);
+        number = displayNum.innerHTML;
+    };
+};
