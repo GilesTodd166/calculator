@@ -63,16 +63,24 @@ operatorButtons.forEach((item) => {
     item.addEventListener('click', (e) => {
         operatorChoice = (e.target.getAttribute('data-ref'));
         displayNum.innerHTML = operatorChoice;
+            // if (displayNum.innerHTML = '') {
+            //     operatorButtons.removeEventListener('click', e);
+            // }
+            // if (firstNum == '') {
+            //     e.item.setAttribute('disabled');
+            // };
     });
 });
 
-equalsButton.addEventListener('click', (e) => {
-    if (secondNum == '') {
-        equalsButton.removeEventListener('click', e);
-    } else {
+equalsButton.addEventListener('click', () => { // STOP - DISABLE BUTTONS CONDITIONALLY, BEFORE FIRTNUM HAS BEEN SET
+   if (firstNum = '') {
+            equalsButtons.removeEventListener('click');
+        }
     operate(firstNum, secondNum, operatorChoice);
     displayNum.innerHTML = number;
-    };
+        // if (firstNum == '') {
+        //     equalsButton.removeEventListener('click', e);
+        // }
 });
 
 clearButton.addEventListener('click', () => {
@@ -80,23 +88,32 @@ clearButton.addEventListener('click', () => {
     firstNum = '';
     secondNum = '';
     operatorChoice = '';
+    number = '';
 });
 
-// let updatedNum;
-// delButton.addEventListener('click', () => {
-//         if (secondNum == '') { 
-//             updatedNum = Math.floor(firstNum / 10);
-//             displayNum.innerHTML = updatedNum;
-//             firstNum = updatedNum;
-//         } else {
-//             updatedNum = Math.floor(secondNum / 10);
-//             displayNum.innerHTML = updatedNum;
-//             secondNum = updatedNum;
-//         }
-//             if (firstNum === 0 || secondNum ===  0) {
-//                 displayNum.innerHTML = '';
-//             }
-// });
+let updatedNum;
+delButton.addEventListener('click', (e) => {
+        if (number != '') {
+            delButton.removeEventListener('click', e);
+        } else if (secondNum == '') { 
+            updatedNum = firstNum.slice(0, -1);
+            displayNum.innerHTML = updatedNum;
+            firstNum = updatedNum;
+                // if (firstNum == '' || secondNum == '') {
+                //     delButton.removeEventListener('click', e);
+                // };
+                // if (displayNum.innerHTML = '') {
+                //     delButton.removeEventListener('click', e);
+                // }
+        } else {
+            updatedNum = secondNum.slice(0, -1);
+            displayNum.innerHTML = updatedNum;
+            secondNum = updatedNum;
+                if (secondNum == '') {
+                    delButton.removeEventListener('click', e);
+                };
+        }
+});
 
 // // Create function to store first number choice, 
 // // operation choice and second number choice, 

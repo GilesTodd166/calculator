@@ -43,7 +43,8 @@
 
 .toolbar {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
+    width: 360px;
 }
 
 .row-1, .row-2, .row-3, .row-4 {
@@ -67,7 +68,7 @@
 
 .del-btn, .clear-btn {
     height: 40px;
-    width: 170px;
+    width: 80px;
 }
 
 .number-btn, .operator-btn, .equals-btn {
