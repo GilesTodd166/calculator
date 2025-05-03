@@ -45,13 +45,15 @@ let operatorClicked = false;
 let result = '';
 
 numberButtons.forEach((number) => {
-    number.addEventListener('click', (e) => {
+    number.addEventListener('click', (e) => { // STOP - DAMON FROM ODIN ADVISED READ THROUGH EVENTLISTNER DOCUMENTATION AGAIN, SEE MDN DOCS EVENTLISTERSN   
         displayNum.innerHTML += (e.target.getAttribute('data-num'));
-                if (operatorClicked) {
-                    secondNum = currentDisplay = parseInt(displayNum.innerHTML);
-                } else {
-                    firstNum = currentDisplay = parseInt(displayNum.innerHTML);
-                }
+            if (e.textContent == '0' && currentDisplay == '0') {
+                return;
+            } else if (operatorClicked) {
+                secondNum = currentDisplay = parseInt(displayNum.innerHTML);
+            } else {
+                firstNum = currentDisplay = parseInt(displayNum.innerHTML);
+            }
     });
 });
 
