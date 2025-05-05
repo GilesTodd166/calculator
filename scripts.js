@@ -37,21 +37,29 @@ let equalsButton = document.querySelector('.equals-btn');
 
 let clearButton = document.querySelector('.clear-btn');
 
-let currentDisplay = '';
+let currentDisplay;
 let firstNum = '';
 let secondNum = '';
 let operatorChoice = '';
 let operatorClicked = false;
+let equalsClicked = false;
 let result = '';
 
 numberButtons.forEach((number) => {
-    number.addEventListener('click', (e) => { // STOP - DAMON FROM ODIN ADVISED READ THROUGH EVENTLISTNER DOCUMENTATION AGAIN, SEE MDN DOCS EVENTLISTERSN   
-        displayNum.innerHTML += (e.target.getAttribute('data-num'));
-            if (e.textContent == '0' && currentDisplay == '0') {
+    number.addEventListener('click', (e) => {
+        if (result != '' && equalsClicked) {
+            clear();
+        }
+        
+            if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
+                displayNum.innerHTML -= 0;
                 return;
             } else if (operatorClicked) {
+                displayNum.innerHTML += (e.target.getAttribute('data-num'));
                 secondNum = currentDisplay = parseInt(displayNum.innerHTML);
+                
             } else {
+                displayNum.innerHTML += (e.target.getAttribute('data-num'));
                 firstNum = currentDisplay = parseInt(displayNum.innerHTML);
             }
     });
@@ -63,6 +71,7 @@ operatorButtons.forEach((operator) => {
             if (firstNum != '' && operatorChoice != '' && secondNum != '') {
                 operate(firstNum, secondNum, operatorChoice);
                 firstNum = result;
+                displayNum.innerHTML = result;
                 operatorChoice = (e.target.getAttribute('data-ref'));
             } else {
                 operatorChoice = (e.target.getAttribute('data-ref'));
@@ -78,6 +87,7 @@ equalsButton.addEventListener('click', () => {
         operate(firstNum, secondNum, operatorChoice);
         displayNum.innerHTML = result;
     };
+    equalsClicked = true;
 });
 
 clearButton.addEventListener('click', () => {
@@ -88,4 +98,16 @@ clearButton.addEventListener('click', () => {
     currentDisplay = '';
     displayNum.innerHTML = '';
     operatorClicked = false;
+    equalsClicked = false;
 });
+
+function clear() {
+    firstNum = '';
+    secondNum = '';
+    operatorChoice = '';
+    result = '';
+    currentDisplay = '';
+    displayNum.innerHTML = '';
+    operatorClicked = false;
+    equalsClicked = false;
+}
