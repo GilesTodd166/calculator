@@ -47,17 +47,17 @@ let result = '';
 
 numberButtons.forEach((number) => {
     number.addEventListener('click', (e) => {
-        if (result != '' && equalsClicked) {
+        if (result != '' && equalsClicked) { // This allows continual operations
             clear();
+        } else if (result != '' && secondNum == '') { // This resets display, so numbers dont stack to the right of previous results
+            displayNum.innerHTML = currentDisplay = '';
         }
-        
             if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
                 displayNum.innerHTML -= 0;
                 return;
             } else if (operatorClicked) {
                 displayNum.innerHTML += (e.target.getAttribute('data-num'));
                 secondNum = currentDisplay = parseInt(displayNum.innerHTML);
-                
             } else {
                 displayNum.innerHTML += (e.target.getAttribute('data-num'));
                 firstNum = currentDisplay = parseInt(displayNum.innerHTML);
@@ -71,9 +71,11 @@ operatorButtons.forEach((operator) => {
             if (firstNum != '' && operatorChoice != '' && secondNum != '') {
                 operate(firstNum, secondNum, operatorChoice);
                 firstNum = result;
+                secondNum = '';
                 displayNum.innerHTML = result;
-                operatorChoice = (e.target.getAttribute('data-ref'));
-            } else {
+                operatorClicked = false; // Resets operator for continual operations
+                operatorChoice = (e.target.getAttribute('data-ref')); 
+            } else { 
                 operatorChoice = (e.target.getAttribute('data-ref'));
             };
             operatorClicked = true;
