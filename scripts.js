@@ -16,16 +16,31 @@ function multiply(a, b) {
     return a * b;
 };
 
+function expo(x, f) {
+    return Number.parseFloat(x).toExponential(f);
+};
+
 function operate(firstNum, secondNum, operatorChoice) {
+
+    let calcSlice;
+    let calc;
+    let calcExpo;
     if (operatorChoice == '+') {
-        result = add(firstNum, secondNum);
+        calc = add(firstNum, secondNum);
     } else if (operatorChoice == '-') {
-        result = subtract(firstNum, secondNum); 
+        calc = subtract(firstNum, secondNum); 
     } else if (operatorChoice == 'x') {
-        result = multiply(firstNum, secondNum); 
+        calc = multiply(firstNum, secondNum); 
     } else {
-        result = divide(firstNum, secondNum);
+        calc = divide(firstNum, secondNum);
     }
+    let calcStr = calc.toString();
+    if (calcStr.length >= 15) {
+        calcExpo = expo(calc, 11);
+        result = calcExpo;
+    } else {
+    result = calc;
+    };
 };
 
 let numberButtons = document.querySelectorAll('.number-btn');
@@ -44,24 +59,31 @@ let operatorChoice = '';
 let operatorClicked = false;
 let equalsClicked = false;
 let result = '';
+let firstStr = '';
 
 numberButtons.forEach((number) => {
     number.addEventListener('click', (e) => {
         if (result != '' && equalsClicked) { // This allows continual operations
-            clear();
-        } else if (result != '' && secondNum == '') { // This resets display, so numbers dont stack to the right of previous results
-            displayNum.innerHTML = currentDisplay = '';
-        }
-            if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
-                displayNum.innerHTML -= 0;
-                return;
-            } else if (operatorClicked) {
-                displayNum.innerHTML += (e.target.getAttribute('data-num'));
-                secondNum = currentDisplay = parseInt(displayNum.innerHTML);
-            } else {
-                displayNum.innerHTML += (e.target.getAttribute('data-num'));
-                firstNum = currentDisplay = parseInt(displayNum.innerHTML);
+                clear();
+            } else if (result != '' && secondNum == '') { // This resets display, so numbers dont stack to the right of previous results
+                displayNum.innerHTML = currentDisplay = '';
             }
+                if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
+                    displayNum.innerHTML -= 0;
+                    return;
+                } else if (operatorClicked) {
+                    secondStr = secondNum.toString();
+                        if (secondStr.length <= 15) {
+                            displayNum.innerHTML += (e.target.getAttribute('data-num'));
+                            secondNum = currentDisplay = parseInt(displayNum.innerHTML);
+                        };
+                } else {
+                    firstStr = firstNum.toString();
+                        if (firstStr.length <= 15) {
+                            displayNum.innerHTML += (e.target.getAttribute('data-num'));
+                            firstNum = currentDisplay = parseInt(displayNum.innerHTML);
+                        };
+            };
     });
 });
 
@@ -101,6 +123,8 @@ clearButton.addEventListener('click', () => {
     displayNum.innerHTML = '';
     operatorClicked = false;
     equalsClicked = false;
+    calc = '';
+    calcSlice = '';
 });
 
 function clear() {
