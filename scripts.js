@@ -21,8 +21,7 @@ function expo(x, f) {
 };
 
 function operate(firstNum, secondNum, operatorChoice) {
-
-    let calcSlice;
+    secondNum = parseInt(secondNum);
     let calc;
     let calcExpo;
     if (operatorChoice == '+') {
@@ -52,6 +51,8 @@ let equalsButton = document.querySelector('.equals-btn');
 
 let clearButton = document.querySelector('.clear-btn');
 
+let decButton = document.querySelector('.dec-btn');
+
 let currentDisplay;
 let firstNum = '';
 let secondNum = '';
@@ -68,21 +69,25 @@ numberButtons.forEach((number) => {
             } else if (result != '' && secondNum == '') { // This resets display, so numbers dont stack to the right of previous results
                 displayNum.innerHTML = currentDisplay = '';
             }
-                if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
-                    displayNum.innerHTML -= 0;
-                    return;
-                } else if (operatorClicked) {
-                    secondStr = secondNum.toString();
-                        if (secondStr.length <= 15) {
-                            displayNum.innerHTML += (e.target.getAttribute('data-num'));
-                            secondNum = currentDisplay = parseInt(displayNum.innerHTML);
-                        };
-                } else {
-                    firstStr = firstNum.toString();
-                        if (firstStr.length <= 15) {
-                            displayNum.innerHTML += (e.target.getAttribute('data-num'));
-                            firstNum = currentDisplay = parseInt(displayNum.innerHTML);
-                        };
+                if (result == '0') {
+                    firstNum = '0';
+                    displayNum.innerHTML = '';
+                }
+                    if ((e.target.getAttribute('data-num')) == '0' && currentDisplay == '0') {
+                        displayNum.innerHTML -= 0;
+                        return;
+                    } else if (operatorClicked) {
+                        secondStr = secondNum.toString();
+                            if (secondStr.length <= 15) {
+                                displayNum.innerHTML += (e.target.getAttribute('data-num'));
+                                secondNum = currentDisplay = displayNum.innerHTML;
+                            };
+                    } else {
+                        firstStr = firstNum.toString(13);
+                            if (firstStr.length <= 15) {
+                                displayNum.innerHTML += (e.target.getAttribute('data-num'));
+                                firstNum = currentDisplay = displayNum.innerHTML;
+                            };
             };
     });
 });
@@ -92,9 +97,9 @@ operatorButtons.forEach((operator) => {
         displayNum.innerHTML = currentDisplay = ''; // Would like to remove this, leave firstNum on display
             if (firstNum != '' && operatorChoice != '' && secondNum != '') {
                 operate(firstNum, secondNum, operatorChoice);
-                firstNum = result;
-                secondNum = '';
                 displayNum.innerHTML = result;
+                firstNum = Number(result);
+                secondNum = '';
                 operatorClicked = false; // Resets operator for continual operations
                 operatorChoice = (e.target.getAttribute('data-ref')); 
             } else { 
@@ -105,6 +110,12 @@ operatorButtons.forEach((operator) => {
 });
 
 equalsButton.addEventListener('click', () => {
+    if (firstNum == '0' && operatorChoice == '/' && secondNum == '0') {
+        operate(firstNum, secondNum, operatorChoice);
+        result = 'nope';
+        displayNum.innerHTML = result;
+        equalsClicked = true;
+    };
     if (firstNum == '' || operatorChoice == '' || secondNum == '') {
         return;
     } else {
@@ -112,6 +123,10 @@ equalsButton.addEventListener('click', () => {
         displayNum.innerHTML = result;
     };
     equalsClicked = true;
+});
+
+decButton.addEventListener('click', () => {
+    displayNum.innerHTML += '.';
 });
 
 clearButton.addEventListener('click', () => {
